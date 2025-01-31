@@ -1,0 +1,6 @@
+---
+standard_packages:
+  - vim
+  - net-tools
+  - tree
+  - sshpass

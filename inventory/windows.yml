@@ -1,0 +1,10 @@
+---
+windows:
+  children:
+    joe_local:
+      hosts:
+        windows_guy:
+          ansible_host: 10.0.0.146
+  vars:
+    ansible_shell_type: powershell
+    ansible_connection: ssh

@@ -1,0 +1,15 @@
+---
+- name: "Block for become"
+  block:
+  - name: "Update repository for ubuntu"
+    shell: |
+      apt update
+  
+  - name: "Install standard packages"
+    package:
+      name: "{{ package }}"
+      state: present
+    loop: "{{ standard_packages }}"
+    loop_control:
+      loop_var: package
+  become: True

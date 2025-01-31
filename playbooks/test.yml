@@ -1,0 +1,15 @@
+---
+- name: "Testing playbook"
+  hosts: "{{ hostname }}"
+  gather_facts: False
+  vars_files:
+    "~/git/ansible/vault/{{ lookup('env','USER') }}.yml"
+  vars:
+    ansible_ssh_user: "{{ standard_username }}"
+    ansible_ssh_pass: "{{ standard_password }}"
+    ansible_become_pass: "{{ standard_password }}"
+  tasks:
+    - import_role:
+        name: setup_ubuntu_vm
+
+# ansible-playbook playbooks/test.yml --ask-vault-pass -e hostname=

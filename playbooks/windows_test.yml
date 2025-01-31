@@ -1,0 +1,21 @@
+---
+- name: "Test playbook for windows"
+  hosts: "{{ hostname }}"
+  gather_facts: False
+  vars_files:
+    - "~/git/ansible/vault/{{ lookup('env','USER') }}.yml"
+  vars:
+    ansible_ssh_user: "{{ windows_user }}"
+    ansible_ssh_pass: "{{ windows_pass }}"
+
+  tasks:
+    - name: "Get windows network information"
+      win_shell: |
+        ipconfig
+      register: ip_info
+
+    - name: "Debug ip info"
+      debug:
+        msg: "{{ ip_info }}"
+
+# ansible-playbook playbooks/windows_test.yml --ask-vault-pass -e hostname=
