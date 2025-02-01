@@ -1,0 +1,19 @@
+---
+- name: "Update and upgrade VM"
+  shell: |
+    apt update
+    apt upgrade -y
+  become: True
+
+- name: "Install docker"
+  package:
+    name: "{{ docker_apps }}"
+    state: present
+  become: True
+
+- name: "Ensure docker service is started"
+  service:
+    name: docker
+    state: started
+    enabled: True
+  become: True
