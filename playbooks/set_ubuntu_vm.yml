@@ -3,7 +3,7 @@
   hosts: "{{ hostname }}"
   gather_facts: False
   vars_files:
-    "~/git/ansible/vault/{{ lookup('env','USER') }}.yml"
+    "../vault/{{ lookup('env','USER') }}.yml"
   vars:
     ansible_ssh_user: "{{ standard_username }}"
     ansible_ssh_pass: "{{ standard_password }}"
@@ -12,4 +12,4 @@
     - import_role:
         name: setup_ubuntu_vm
 
-# ansible-playbook playbooks/test.yml --ask-vault-pass -e hostname=
+# ansible-playbook playbooks/setup_ubuntu_vm.yml --ask-vault-pass -e hostname=

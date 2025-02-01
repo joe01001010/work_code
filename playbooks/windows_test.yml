@@ -3,7 +3,7 @@
   hosts: "{{ hostname }}"
   gather_facts: False
   vars_files:
-    - "~/git/ansible/vault/{{ lookup('env','USER') }}.yml"
+    - "../vault/{{ lookup('env','USER') }}.yml"
   vars:
     ansible_ssh_user: "{{ windows_user }}"
     ansible_ssh_pass: "{{ windows_pass }}"

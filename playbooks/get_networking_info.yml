@@ -1,0 +1,20 @@
+---
+- name: "Get Networking info"
+  hosts: "{{ hostname }}"
+  gather_facts: False
+  vars_files:
+    - "../vault/{{ lookup('env','USER') }}.yml"
+  vars:
+    cidr_network: "10.100.100.64/26"
+
+  tasks:
+    - name: "Get avaialble IPs from {{ cidr_network }}"
+      ip_range:
+        subnet: "{{ cidr_network }}"
+      register: ip_info
+
+    - name: "Debug ip info"
+      debug:
+        msg: "{{ ip_info }}"
+
+# ansible-playbook playbooks/get_networking_info.yml --ask-vault-pass -e hostname=
