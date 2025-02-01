@@ -14,7 +14,7 @@ options:
     required: true
     type: str
 author:
-  - "Your Name (@yourhandle)"
+  - Joe
 '''
 
 EXAMPLES = '''
