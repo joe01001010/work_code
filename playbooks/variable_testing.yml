@@ -1,0 +1,17 @@
+---
+- name: "Playbook for variable demonstration"
+  hosts: "{{ hostname }}"
+  gather_facts: False
+  vars_files:
+    - "../vault/{{ lookup('env','USER') }}.yml"
+
+  tasks:
+    - name: "Debug host vars"
+      debug:
+        msg: "Ansible ssh user: {{ ansible_ssh_user }}"
+
+    - name: "Debug group vars"
+      debug:
+        msg: "{{ location }}"
+
+# ansible-playbook playbooks/variable_testing.yml --ask-vault-pass -e hostname=
