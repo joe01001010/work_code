@@ -1,0 +1,47 @@
+---
+- name: "Playbook to get info from spotify api"
+  hosts: "{{ hostname }}"
+  gather_facts: False
+  vars_files:
+    - "../vault/{{ lookup('env','USER') }}.yml"
+  vars:
+    spotify_token_url: "https://accounts.spotify.com/api/token"
+    spotify_search_url: "https://api.spotify.com/v1/search"
+    artist_query: "artist:Eminem"
+
+  tasks:
+    - name: "Query {{ spotify_token_url }} for token"
+      uri:
+        url: "{{ spotify_token_url }}"
+        method: POST
+        url_username: "{{ spotify_client_id }}"
+        url_password: "{{ spotify_client_secret }}"
+        force_basic_auth: True
+        headers:
+          Content-Type: "application/x-www-form-urlencoded"
+          Accept: "application/json"
+        body:
+          grant_type: client_credentials
+        body_format: form-urlencoded
+      register: spotify_token
+
+    - name: "Query Spofity for {{ artist_query }} from {{ spotify_search_url }}"
+      uri:
+        url: "{{ spotify_search_url }}?q={{ query | urlencode }}&type=artist"
+        method: GET
+        headers:
+          Authorization: "Bearer {{ spotify_token['json']['access_token'] }}"
+          Accept: "application/json"
+        return_content: True
+      register: artist_response
+
+    - name: "Print the most famous artist form the list"
+      debug:
+        msg: >-
+          {{
+            artist_response['json'] 
+            | json_query("artists.items | sort_by(@, &popularity)[-1]")
+          }}
+
+
+# ansible-playbook playbooks/spotify.yml --ask-vault-pass -e hostname=
