@@ -15,4 +15,7 @@
     - import_role:
         name: install_docker
 
+    - import_role:
+        name: setup_vim
+
 # ansible-playbook playbooks/setup_ubuntu_vm.yml --ask-vault-pass -e hostname=

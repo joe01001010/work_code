@@ -1,0 +1,12 @@
+set nocompatible
+set number
+set cursorline
+set cursorcolumn
+set shiftwidth=2
+set tabstop=2
+set expandtab
+set incsearch
+set ignorecase
+set smartcase
+set hlsearch
+set autoindent

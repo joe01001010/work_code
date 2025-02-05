@@ -1,0 +1,6 @@
+---
+- name: "Copy vimrc file to correct vimrc location"
+  copy:
+    src: .vimrc
+    dest: ~/.vimrc
+    force: True
