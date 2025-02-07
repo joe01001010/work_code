@@ -1,0 +1,9 @@
+---
+- name: "Playbook for running demo role"
+  hosts: localhost
+  gather_facts: False
+
+  tasks:
+    - import_role:
+        name: demo-role
+
