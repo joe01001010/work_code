@@ -1,0 +1,41 @@
+---
+- name: "Block for become"
+  block:
+  - name: "Download necessary apt packages for minikube"
+    apt:
+      name: "{{ apt_packages }}"
+      state: present
+  
+  - name: "Ensure docker service is started"
+    service:
+      name: docker
+      state: started
+      enabled: True
+  
+  - name: "Pull the minikube binary from {{ minikube_url }}"
+    get_url:
+      url: "{{ minikube_url }}"
+      dest: /usr/local/bin/minikube
+      mode: 0755
+      force: True
+  
+  - name: "Query most recent version of kubernetes"
+    uri:
+      url: "{{ kubectl_url }}/stable.txt"
+      return_content: True
+    register: kubernetes_raw_version
+  
+  - name: "Pull the kubectl binary from {{ kubectl_url }}/{{ kubernetes_raw_version.content }}/bin/linux/amd64/kubectl"
+    get_url:
+      url: "{{ kubectl_url }}/{{ kubernetes_raw_version.content }}/bin/linux/amd64/kubectl"
+      dest: /usr/local/bin/kubectl
+      mode: 0755
+      force: True
+  
+  - name: "Start minikube using docker"
+    shell: minikube start --driver=docker --force
+    args:
+      creates: /root/.minikube
+    register: minikube_startup
+    changed_when: "'Done!' in minikube_startup.stdout"
+  become: True

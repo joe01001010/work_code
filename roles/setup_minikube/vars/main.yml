@@ -1,0 +1,11 @@
+---
+apt_packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - conntrack
+  - socat
+
+
+minikube_url: "https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64"
+kubectl_url: "https://cdn.dl.k8s.io/release"

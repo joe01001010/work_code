@@ -18,4 +18,8 @@
     - import_role:
         name: setup_vim
 
+    - import_role:
+        name: setup_minikube
+      tags: minikube
+
 # ansible-playbook playbooks/setup_ubuntu_vm.yml --ask-vault-pass -e hostname=
