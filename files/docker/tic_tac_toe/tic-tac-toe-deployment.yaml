@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tic-tac-toe
+  namespace: tic-tac-toe
 spec:
   replicas: 1
   selector:
@@ -15,6 +16,6 @@ spec:
     spec:
       containers:
       - name: tic-tac-toe
-        image: tic-tac-toe-image:latest
+        image: 10.0.2.15:5000/tic-tac-toe-image:latest
         ports:
         - containerPort: 80
