@@ -1,0 +1,20 @@
+---
+version: 3
+images:
+  base_image:
+    name: registry.redhat.io/ubi9-minimal:latest
+
+dependencies:
+  ansible_core:
+    package_pip: ansible-core
+  ansible_runner:
+    package_pip: ansible-runner
+  python: requirements.txt
+  galaxy: requirements.yml
+
+additional_build_steps:
+  prepend_base: |
+    RUN ln -s /usr/bin/microdnf /usr/bin/dnf
+    RUN microdnf install python39 -y
+    RUN microdnf clean all
+    RUN ln -sf /usr/bin/python3.9 /usr/bin/python3
