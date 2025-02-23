@@ -2,6 +2,6 @@
 ansible-navigator:
   execution-environment:
     container-engine: podman
-    image: localhost/ubi9-3.18.2-ee-python312:latest
+    image: quay.io/joeweibel77/ubi9-2.18.2-ee-python312
     pull:
       policy: never
