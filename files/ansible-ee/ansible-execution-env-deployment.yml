@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: ansible-exec-env
-        image: localhost/ubi9-ee-minimal:latest
+        image: quay.io/joeweibel77/ubi9-2.18.2-ee-python312:latest
         imagePullPolicy: IfNotPresent
         command: ["tail", "-f", "/dev/null"]
