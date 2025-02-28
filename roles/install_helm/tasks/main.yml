@@ -1,0 +1,32 @@
+---
+- name: "Query github URL to get the latest version of helm"
+  uri:
+    url: "{{ github_helm_version_url }}"
+    return_content: True
+  register: helm_version_response
+
+- name: "Query the get helm url to pull the latest tar of helm"
+  get_url:
+    url: "{{ pull_helm_url }}/helm-{{ helm_version_response['json']['tag_name'] }}-linux-amd64.tar.gz"
+    dest: "/tmp/helm-{{ helm_version_response['json']['tag_name'] }}-linux-amd64.tar.gz"
+    mode: 0644
+    force: True
+
+- name: "Extract helm archive"
+  unarchive:
+    src: "/tmp/helm-{{ helm_version_response['json']['tag_name'] }}-linux-amd64.tar.gz"
+    dest: "/tmp"
+    remote_src: True
+
+- name: "Move Helm to binary /usr/local/bin"
+  shell: |
+    mv -f /tmp/linux-amd64/helm /usr/local/bin/helm
+  become: True
+
+- name: "Ensure helm is executable"
+  file:
+    path: /usr/local/bin/helm
+    mode: 0755
+    owner: root
+    group: root
+  become: True

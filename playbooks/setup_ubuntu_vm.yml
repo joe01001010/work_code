@@ -22,4 +22,7 @@
         name: setup_minikube
       tags: minikube
 
+    - import_role:           
+        name: install_helm
+
 # ansible-playbook playbooks/setup_ubuntu_vm.yml --ask-vault-pass -e hostname=
