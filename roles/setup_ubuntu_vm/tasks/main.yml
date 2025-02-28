@@ -1,6 +1,13 @@
 ---
 - name: "Block for become"
   block:
+  - name: "Add the google nameservers to /etc/resolv.conf file for name resolution"
+    blockinfile:
+      path: /etc/resolv.conf
+      block: |
+        nameserver 8.8.8.8
+        nameserver 8.8.4.4
+    
   - name: "Update repository for ubuntu"
     shell: |
       apt update
