@@ -1,11 +1,7 @@
 ---
-apt_packages:
-  - apt-transport-https
-  - ca-certificates
+packages:
   - curl
-  - conntrack
-  - socat
-
+minikube_binary_path: /usr/local/bin/minikube
 
 minikube_url: "https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64"
 kubectl_url: "https://cdn.dl.k8s.io/release"

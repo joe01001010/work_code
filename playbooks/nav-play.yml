@@ -1,0 +1,34 @@
+---
+- name: "This playbook is for running in ansible navigator as a test"
+  hosts: localhost
+  tasks:
+    - name: "Get a listing of working directory"
+      shell: |
+        pwd
+      register: work_dir
+
+    - name: "Get a listing of whats in working dir"
+      shell: |
+        ls
+      register: work_dir_contents
+
+    - name: "Get listing of where the vault dir is supposed to be"
+      shell: |
+        ls ../vault
+      register: vault_dir_contents
+
+    - name: "Debug work_dir"
+      debug:
+        msg: "{{ work_dir }}"
+
+    - name: "Debug work_dir_contents"
+      debug:
+        msg: "{{ work_dir_contents }}"
+
+    - name: "Debug vault_dir_contents"
+      debug:
+        msg: "{{ vault_dir_contents }}"
+
+    - name: "Debug nav_user"
+      debug:
+        msg: "{{ ansible_facts['user_id'] }}"

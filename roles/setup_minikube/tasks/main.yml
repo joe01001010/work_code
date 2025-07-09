@@ -1,21 +1,21 @@
 ---
 - name: "Block for become"
   block:
-  - name: "Download necessary apt packages for minikube"
-    apt:
-      name: "{{ apt_packages }}"
+  - name: "Download necessary packages for minikube"
+    package:
+      name: "{{ packages }}"
       state: present
   
-  - name: "Ensure docker service is started"
+  - name: "Ensure podman service is started"
     service:
-      name: docker
+      name: podman
       state: started
       enabled: True
   
   - name: "Pull the minikube binary from {{ minikube_url }}"
     get_url:
       url: "{{ minikube_url }}"
-      dest: /usr/local/bin/minikube
+      dest: "{{ minikube_binary_path }}"
       mode: 0755
       force: True
   
@@ -32,8 +32,8 @@
       mode: 0755
       force: True
   
-  - name: "Start minikube using docker"
-    shell: minikube start --driver=docker --force
+  - name: "Start minikube using podman"
+    shell: "{{ minikube_binary_path }} start --driver=podman --force"
     args:
       creates: /root/.minikube
     register: minikube_startup

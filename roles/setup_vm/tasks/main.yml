@@ -8,15 +8,8 @@
         nameserver 8.8.8.8
         nameserver 8.8.4.4
     
-  - name: "Update repository for ubuntu"
-    shell: |
-      apt update
-  
   - name: "Install standard packages"
     package:
-      name: "{{ package }}"
+      name: "{{ standard_packages }}"
       state: present
-    loop: "{{ standard_packages }}"
-    loop_control:
-      loop_var: package
   become: True

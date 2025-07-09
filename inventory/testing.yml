@@ -1,0 +1,39 @@
+---
+us:
+  children:
+    raleigh:
+      hosts:
+        servera.lab.example.com:
+        serverb.lav.example.com:
+    mountainview:
+      hosts:
+        serverc.lab.example.com:
+
+webservers:
+  hosts:
+    servera.lab.example.com:
+    serverb.lab.example.com:
+    serverc.lab.example.com:
+    serverd.lab.example.com:
+
+london:
+  hosts:
+    serverd.lab.example.com:
+
+development:
+  hosts:
+    servera.lab.example.com:
+
+testing:
+  hosts:
+    serverb.lab.example.com:
+
+production:
+  hosts:
+    serverc.lab.example.com:
+    serverd.lab.example.com:
+
+joe:
+  hosts:
+    my_vm:
+      ansible_host: 10.0.0.75

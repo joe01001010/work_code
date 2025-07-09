@@ -1,0 +1,13 @@
+---
+- name: "Install podman"
+  package:
+    name: "{{ podman_apps }}"
+    state: present
+  become: True
+
+- name: "Ensure podman  service is started"
+  service:
+    name: podman
+    state: started
+    enabled: True
+  become: True

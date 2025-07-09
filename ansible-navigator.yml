@@ -1,0 +1,36 @@
+---
+ansible-navigator:
+  ansible:
+    config:
+      path: ./ansible.cfg
+  execution-environment:
+    container-engine: auto
+    container-options:
+      - "--net=host"
+    enabled: True
+    environment-variables:
+      pass:
+        - USER
+        - HOME
+#       # Specify an environment variable and a value to be set within the
+#       # execution environment (--senv MY_VAR=42)
+#       set:
+#         KEY1: VALUE1
+#         KEY2: VALUE2
+#         KEY3: VALUE3
+    image: registry.redhat.io/ansible-automation-platform-25/ee-supported-rhel9:latest
+    pull:
+      arguments:
+        - "--tls-verify=false"
+      policy: missing
+#     volume-mounts:
+#       - src: "/tmp/directory"
+#         dest: "/tmp/directory"
+#         options: "Z"
+  logging:
+    level: debug
+    append: False
+  mode: stdout
+  playbook-artifact:
+    enable: False
+

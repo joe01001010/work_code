@@ -1,0 +1,19 @@
+---
+- name: "Testing playbook"
+  hosts: "{{ hostname }}"
+  gather_facts: False
+  vars_files:
+    - "/home/{{ lookup('env', 'USER') }}/git/work_code/vault/{{ lookup('env','USER') }}.yml"
+  roles:
+    - name: setup_vm
+      tags: setup
+    - name: setup_vim
+      tags: vim
+    - name: install_podman
+      tags: podman
+    - name: setup_minikube
+      tags: minikube
+    - name: install_helm
+      tags: helm
+
+# ansible-playbook playbooks/setup_ubuntu_vm.yml --ask-vault-pass -e hostname=
