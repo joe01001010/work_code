@@ -1,0 +1,47 @@
+---
+- name: "Play to create a logical volume"
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - "../vault/{{ lookup('env', 'USER') }}.yml"
+  vars:
+    ansible_become_pass: "{{ standard_password }}"
+    disk_to_manipulate: /dev/sdb
+    vg_name: vg_joe
+    lv_name: lv_joe
+    lv_size: 10G
+    fs_type: ext4
+    mount_path: /tmp/joe_mount
+  become: true
+
+  tasks:
+    - name: "Debug test"
+      community.general.lvg:
+        pvs: "{{ disk_to_manipulate }}"
+        vg: "{{ vg_name }}"
+
+    - name: "Create logical volume"
+      community.general.lvol:
+        vg: "{{ vg_name }}"
+        lv: "{{ lv_name }}"
+        size: "{{ lv_size }}"
+
+    - name: "Make filesystem type writable"
+      community.general.filesystem:
+        fstype: "{{ fs_type }}"
+        dev: /dev/{{ vg_name }}/{{ lv_name }}
+
+    - name: "Create mount point directory"
+      ansible.builtin.file:
+        path: "{{ mount_path }}"
+        state: directory
+        mode: 0755
+        owner: weibelj
+        group: weibelj
+
+    - name: "Mount file but dont make fstab entry"
+      ansible.posix.mount:
+        path: "{{ mount_path }}"
+        src: /dev/{{ vg_name }}/{{ lv_name }}
+        fstype: ext4
+        state: mounted
